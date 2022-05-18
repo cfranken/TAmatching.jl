@@ -1,7 +1,7 @@
 # TAmatching.jl
 TA matching for Caltech GPS (beta)
 
-This package enables a beta version for TA matching based on available algorithms in other areas (matchmaking, e.g. the National Resident Matching Program).
+This package enables a beta version for TA matching based on available algorithms in other areas (matchmaking, e.g. the National Resident Matching Program). Largely follows the Roth Peranson Match Algorithm now, with inspiration from https://github.com/J-DM/Roth-Peranson
 
 The most important steps are as follows:
 

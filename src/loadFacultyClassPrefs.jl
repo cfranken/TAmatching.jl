@@ -1,18 +1,18 @@
-class_file_final = "/Users/cfranken/GDrive/work/Caltech/OptionRepWork/TA2021/GPS_TA_List_2020_2021.xlsx"
+function loadFacultyClassPrefs(file)
 
-
-tabs =  ["Division", "Geology", "Geophysics", "Geobiology", "Geochemistry", "Planetary Science", "ESE", "Special Courses"]
-
-class_array = []
-for ii in eachindex(tabs)
-    println(tabs[ii])
-    df_classes  = DataFrame(XLSX.readtable(class_file_final, tabs[ii])...)
-    for class in eachrow(df_classes)
-        if class[2] > 0
-            println(class."Class Name", " ", class[2] , " " , tabs[ii])
-            names = split(class."Matched",",")
-            students = strip.(names)
-            push!(class_array, gps_class(students,students,class."Class Name",tabs[ii], class[2], class[2], [],[]) )
+    class_array = []
+    df_classes  = DataFrame(XLSX.readtable(file, 1)...)
+    for _class in eachrow(df_classes)
+        nTA = _class[2]
+        if nTA > 0
+            println(_class."Course", " ", nTA )
+            names = Array(_class[3:2:end])
+            students = collect(skipmissing(names))
+            _scores  = Array(_class[4:2:end])
+            scores   = Float64.(collect(skipmissing(_scores)))
+            @assert length(students) == length(scores) "Score - Student mismatch"
+            push!(class_array, class(_class."Course", students,scores, student[], Float64[],nTA) )
         end
     end
+    return class_array
 end

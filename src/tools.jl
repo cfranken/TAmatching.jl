@@ -122,3 +122,39 @@ function getIndex(name, list)
     end
 end
 
+"Check student submissions"
+function checkStudents(students, submissions, thresh=3)
+    for i = 1:size(students,1)
+            #foundEmail = students[option]."Email"[i] in submissions."Email Address"
+            #if !foundEmail
+            # Try matching names:
+            sName = students."Name"[i]
+            mc, bestMatch = matchNames(sName,submissions."Your Name")
+            if mc<thresh
+                println(sName, " ", students."Option"[i], " ", students."Year"[i], " , matchScore: ", mc, ", Best match: ", bestMatch )
+            end
+            #end
+        end
+end 
+
+# find matching names, return matching score and index
+function matchNames(student_name,fac_names)
+    mc  = 0
+    bestMatch = "" # best match!
+    subname = split(strip(student_name)," ")
+    for s in fac_names
+        cc = 0
+        fac_sub = split(strip(s)," ")
+        for sub in lowercase.(subname), subf in lowercase.(fac_sub)
+            # Could use regex or something, just being lazy...
+            cc += occursin(sub, subf)
+            cc += occursin(subf, sub)
+        end
+        if cc > mc
+            mc = cc
+            bestMatch = s
+        end
+    end
+    return mc, bestMatch
+end
+

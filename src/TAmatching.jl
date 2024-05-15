@@ -10,6 +10,7 @@ include("tools.jl")
 include("loadStudentPrefs.jl")
 include("createStudentFile.jl")
 include("loadFacultyClassPrefs.jl")
+include("exportResults.jl")
 
 export loadStudentPreferences, createStudentFile, loadFacultyClassPrefs, compute_score, find_next
 

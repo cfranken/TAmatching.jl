@@ -18,6 +18,8 @@ Base.@kwdef mutable struct student
     option::String
     email::String
     graduate::String
+    class_choices_all::Array{String}
+    class_preferences_all::Array{Float64}
 end
 
 

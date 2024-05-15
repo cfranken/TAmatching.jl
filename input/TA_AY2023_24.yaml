@@ -1,0 +1,24 @@
+# YAML file for the Academic Year 2022/2023
+# Can be read in as params_dict = YAML.load_file("input/TA_AY2022_23.yaml")
+
+# Files (list of Excel files to be used):
+files: 
+  folder:      "/Users/cfranken/Library/CloudStorage/GoogleDrive-cfranken@caltech.edu/My Drive/TA_AY2023_2024/"
+  studentFile: "TA_WISH_LIST_GRADS_AY2023-2024_May11_2023.xlsx"
+  # Main tab:
+  tab: "GPS TA Preferences 2023-2024"
+  outFile:   "ExtractedStudent_TA_Preferences_2023-24.xlsx"
+  classFile: "TA_classList_2023_2024.xlsx"
+  # create file like studentFile = params_dict["files"]["folder"] * params_dict["files"]["studentFile"] 
+
+# Specific names for the created Excel sheet (fields for answers, etc ), here we associate those to our standard C1-C5 notation
+
+# Row names for classes C1-C5
+Classes:
+   # First Choice row (C1 and so forth):
+   C1:  "First Choice"
+   C2:  "Second Choice"
+   C3:  "Third Choice"
+   C4:  "Fourth Choice "
+   C5:  "Fifth Choice"
+

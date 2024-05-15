@@ -1,7 +1,7 @@
 using TAmatching
 
 # "Main" file for the academic year 2022/2023 
-yamlFile = "input/TA_AY2022_23.yaml"
+yamlFile = "input/TA_AY2023_24.yaml"
 
 # Load all students (YAML file to be specified):
 student_array, df_students = loadStudentPreferences(yamlFile);
@@ -20,7 +20,7 @@ createStudentFile(yamlFile, df_students);
 
 # TBD
 
-file = "/Users/cfranken/Library/CloudStorage/GoogleDrive-cfranken@caltech.edu/My Drive/TA_AY2022_2023/TACourseList20220525.xlsx"
+file = "/Users/cfranken/Library/CloudStorage/GoogleDrive-cfranken@caltech.edu/My Drive/TA_AY2023_2024/GPS_TA_2023_2024.xlsx"
 
 class_array = loadFacultyClassPrefs(file);
 
@@ -29,7 +29,7 @@ for _student in student_array
     find_next(_student, class_array, student_array)
 end
 
-file2 = "/Users/cfranken/Matches_20220525.xlsx"
+file2 = "/Users/cfranken/GPS_TA_Matches_20230525.xlsx"
 TAmatching.exportResults(file2, class_array, student_array)
 
 #=

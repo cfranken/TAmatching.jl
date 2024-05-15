@@ -8,7 +8,7 @@ function find_next_preference(student)
 end
 
 # Find next student choice
-function find_next(student, class_array)
+function find_next(student, class_array, student_array)
     if length(student.class_choices) == 0
         student.current_choice     = []
         #student.current_preference = []
@@ -16,41 +16,69 @@ function find_next(student, class_array)
     else
         class_choice, class_preference = find_next_preference(student)
         @show student.name, class_choice
-        if apply_to(class_array, class_choice, student, class_preference)
+        if apply_to(class_array, class_choice, student_array, student, class_preference)
             #student.current_choice = class_array[i]
             return true
         end
     end
-    find_next(student, class_array)
+    find_next(student, class_array,student_array)
 end
 
-function apply_to(class_array, class_name, _student, class_preference)
+# Check if a student matches an unassigned class:
+function matches_unassigned_class(s,c_array)
+    for j = 1:length(s.class_choices)
+        _class = s.class_choices[j]
+        for i = 1:length(c_array)
+            if length(c_array[i].current_matches) < c_array[i].capacity
+                # Find if it matches a choice:
+                if _class == c_array[i].name
+                    iScore = compute_score(c_array[i], s, s.class_preferences[j])
+                    println(s.name, " " , _class, " ", s.current_preference, " ",  iScore)
+                    return iScore, s.current_preference, i
+                end
+            end
+        end
+    end
+    return -1,-1,-1
+end
+
+function apply_to(class_array, class_name, student_array, _student, class_preference)
+    @show class_name
     i = findall(x -> x.name==class_name,class_array)[1]
-    
+    if class_array[i].capacity == 0
+        return false
+    end
     # First make sure the name is in the list:
     if _student.name in class_array[i].all_matches
+        @show class_name, _student
         iScore = compute_score(class_array[i],_student, class_preference)
-        @show _student.name, iScore, class_name
+        if iScore == 0
+            return false
+        end
+        #@show _student.name, iScore, class_name
         # Still space? then add to the list...
         if length(class_array[i].current_matches) < class_array[i].capacity
             push!(class_array[i].current_matches, _student)
             push!(class_array[i].current_scores, iScore)
             # Sort now!
             sort!(class_array[i])
-            _student.current_choice = class_array[i]
+            _student.current_choice     = class_array[i].name
+            _student.current_preference = class_preference
             return true
         end
 
         # If class is full, check if match is better than the last in the list
-        if iScore > class_array[i].current_scores[end]
+        if iScore < class_array[i].current_scores[end]
             replaced = pop!(class_array[i].current_matches)
+            iS = findall(x -> x.name==replaced.name,student_array)[1]
             pop!(class_array[i].current_scores)
 
             push!(class_array[i].current_matches, _student)
             push!(class_array[i].current_scores, iScore)
             sort!(class_array[i])
-            _student.current_choice = class_array[i]
-            find_next(replaced,class_array)
+            _student.current_choice     = class_array[i].name
+            _student.current_preference = class_preference
+            find_next(replaced,class_array, student_array)
             return true
         end
     end
@@ -59,8 +87,8 @@ end
 
 # Sort scores and matches:
 function sort!(_class::class)
-    sortedIndex = sortperm(_class.current_scores,rev=true)
-    @show _class.current_scores, _class.current_matches
+    sortedIndex = sortperm(_class.current_scores)
+    #@show _class.current_scores, _class.current_matches
     _class.current_scores  = _class.current_scores[sortedIndex]
     _class.current_matches = _class.current_matches[sortedIndex]
 end
@@ -79,12 +107,16 @@ function compute_score(_class::class, _student::student, class_preference)
     else
         # iClass   = iClass[1]
         iStudent = iStudent[1]
-        norm_class   = mean(_class.all_scores)
+        #norm_class   = mean(_class.all_scores)
 
         # This can be adapted in the future:
-        score =  class_preference + (_class.all_scores[iStudent]/norm_class)/2
-        @show score
-        return score
+        score =  0.5*class_preference + 0.5*_class.all_scores[iStudent]
+        #score = _class.all_scores[iStudent]
+        if _class.all_scores[iStudent] == 0
+            return 0
+        else
+            return score
+        end  
     end
 end
 
@@ -97,7 +129,7 @@ function find_matched_students(df_classes, df_students, class)
         matchedStudent = filter(df -> occursin(lowercase(class), lowercase(df[StuClass[a]])), dropmissing(df_students, StuClass[a]))
         for i=1:size(matchedStudent,1)
             j += 1
-            sName = matchedStudent[!,:"Your Name"][i]
+            sName = matchedStudent[!,:"Full Name"][i]
             println(sName)
             # This index is still a bit hardcoded, #1 is course name, #2 is number of TAs, then student name and faculty rankings
             iName = 3 + (j-1)*2

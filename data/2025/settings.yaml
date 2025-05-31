@@ -1,0 +1,35 @@
+# YAML file for the Academic Year 2025/2026
+
+# file names and folders
+files: 
+  rootfolder: "2025/"
+  inputfolder: "input/"
+  outputfolder: "output/"
+  studentsfile: "students.xlsx"
+  classesfile: "classes.xlsx"
+  facultyfile: "faculty.xlsx"
+  matchesfile: "matches.xlsx"
+
+# Specific names for the created Excel sheet (fields for answers, etc ), here we associate those to our standard C1-C5 notation
+
+# column labels for student preferences
+studentscollabels:
+  name: "Full Name"
+  option: "Select your Option"
+  graduate: "Are you planning to graduate in AY2025-2026?"
+  classes:
+    - "First Choice"
+    - "Second Choice"
+    - "Third Choice"
+    - "Fourth Choice"
+    - "Fifth Choice"
+
+# multiple choice labels for student preferences
+studentsmclabels:
+  graduateyes: "YES"
+  graduateno: "NO"
+
+# column labels for faculty preferences
+classescollabels:
+  class: "Course"
+  num: "nTA"

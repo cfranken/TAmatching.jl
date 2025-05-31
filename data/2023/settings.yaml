@@ -1,0 +1,33 @@
+# YAML file for the academic year 2023/2024
+
+# file names and folders
+files: 
+  rootfolder: "data/2023/"
+  inputfolder: "input/"
+  outputfolder: "output/"
+  studentsfile: "students.xlsx"
+  classesfile: "classes.xlsx"
+  facultyfile: "faculty.xlsx"
+  matchesfile: "matches.xlsx"
+
+# column labels for student preferences
+studentscollabels:
+  name: "Full Name"
+  option: "Option"
+  graduate: "Are you planning to graduate in AY2023-2024?"
+  classes:
+    - "First Choice"
+    - "Second Choice"
+    - "Third Choice"
+    - "Fourth Choice "
+    - "Fifth Choice"
+
+# multiple choice labels for student preferences
+studentsmclabels:
+  graduateyes: "Yes"
+  graduateno: "No"
+
+# column labels for faculty preferences
+classescollabels:
+  class: "Course"
+  num: "nTA"

@@ -1,18 +1,10 @@
 module TAmatching
 
-using YAML
-using XLSX
-using DataFrames
-using Statistics
+using YAML, XLSX, DataFrames
 
-include("structs.jl")
-include("tools.jl")
-include("loadStudentPrefs.jl")
-include("createStudentFile.jl")
-include("loadFacultyClassPrefs.jl")
-include("exportResults.jl")
+include("io.jl")
+include("matching.jl")
 
-export loadStudentPreferences, createStudentFile, loadFacultyClassPrefs, compute_score, find_next
+export loadstudentpreferences, createfacultyfile, loadfacultypreferences, match!, writematches
 
-
-end # module
+end

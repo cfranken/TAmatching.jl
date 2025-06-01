@@ -1,7 +1,7 @@
 # TAmatching.jl
 TA matching for Caltech GPS (beta)
 
-This package allows the matching of TAs to classes treating it as a [stable matching problem]{https://en.wikipedia.org/wiki/Stable_matching_problem}. It uses the [Gale–Shapley algorithm]{https://en.wikipedia.org/wiki/Gale%E2%80%93Shapley_algorithm} with students in the role of proposers, ensuring optimal matching for the students.
+This package allows the matching of TAs to classes treating it as a [stable matching problem](https://en.wikipedia.org/wiki/Stable_matching_problem). It uses the [Gale–Shapley algorithm](https://en.wikipedia.org/wiki/Gale%E2%80%93Shapley_algorithm) with students in the role of proposers, ensuring optimal matching for the students.
 
 The most important steps are as follows:
 

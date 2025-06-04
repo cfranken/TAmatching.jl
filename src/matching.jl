@@ -15,7 +15,9 @@ function match!(students, classes)
         # get highest priority class and remove it from list
         propclass = pop!(s.classes)
         # find associated class
-        c = classes[findfirst(propclass .== classes[:,:class]),:]
+        i = findfirst(propclass .== classes[:,:class])
+        isnothing(i) && throw("Class ``$propclass'' of student ``$(s.name)'' not found in faculty file.")
+        c = classes[i,:]
         # make sure class needs TAs
         if c.num > 0
           if length(c.tas) < c.num # free slot?
@@ -29,15 +31,15 @@ function match!(students, classes)
             # check if current student is ranked more highly
             if findrank(s.name, c) < maximum(ranks)
               # find assigned student with worst ranking in current TA list
-              i = argmax(ranks)
+              j = argmax(ranks)
               # find that student in full student list
-              j = findfirst(c.tas[i] .== students.name)
+              k = findfirst(c.tas[j] .== students.name)
               # overwrite with current student
-              c.tas[i] = s.name
+              c.tas[j] = s.name
               # tag current student as matched
               s.matched = true
               # tag bumped student as unmatched
-              students[j,:matched] = false
+              students[k,:matched] = false
             end
           end
         end
@@ -51,5 +53,6 @@ end
 
 function findrank(studentname, class)
   i = findfirst(studentname .== [s[1] for s in class.students])
+  isnothing(i) && throw("Student ``$studentname'' not found in faculty ranking for class ``$(class.class)''.")
   return class.students[i][2]
 end

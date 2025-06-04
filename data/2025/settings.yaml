@@ -2,7 +2,7 @@
 
 # file names and folders
 files: 
-  rootfolder: "2025/"
+  rootfolder: "data/2025/"
   inputfolder: "input/"
   outputfolder: "output/"
   studentsfile: "students.xlsx"

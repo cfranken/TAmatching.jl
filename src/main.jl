@@ -1,7 +1,7 @@
 using TAmatching, YAML
 
 # load settings from YAML file
-params = YAML.load_file("data/2023/settings.yaml")
+params = YAML.load_file("data/2025/settings.yaml")
 
 # load students
 students = loadstudentpreferences(params)

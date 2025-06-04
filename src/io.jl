@@ -77,7 +77,7 @@ function loadfacultypreferences(params)
     num = s[collabels["num"]]
     students = Tuple{String, Int}[]
     i = 1
-    while !ismissing(s[1+2i])
+    while 1+2i < length(s) && !ismissing(s[1+2i])
       push!(students, (s[1+2i], s[2+2i]))
       i += 1
     end
